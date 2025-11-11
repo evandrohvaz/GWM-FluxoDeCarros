@@ -57,13 +57,18 @@ st.markdown('Acompanhe a ocupação em tempo real e exporte a sequência de prod
 st.markdown('---')
 
 # --- 2. CONFIGURAÇÕES DE DADOS E Mapeamento de Colunas ---
+
+# ATUALIZADO: Inclui BCHOFF na capacidade total
 VAGAS_POR_ESTACAO = {
     'PBS_Off': 6,
     'BAIN': 15,
     'BAOFF': 8,
+    'BCHOFF': 5, # VAGAS PARA BCHOFF (AJUSTE SE NECESSÁRIO)
     'AF-IN': 9
 }
-ordem_estacoes = list(VAGAS_POR_ESTACAO.keys())
+
+# ATUALIZADO: Define a ordem correta das estações, incluindo BCHOFF
+ordem_estacoes = ['PBS_Off', 'BAIN', 'BAOFF', 'BCHOFF', 'AF-IN']
 
 # Nomes de colunas conforme o seu arquivo Excel
 NOME_BODY = 'Body number'
@@ -115,10 +120,10 @@ def exibir_estacao(df_estacao, estacao, vagas):
             body = df_vagas.loc[i, NOME_BODY]
             lote = df_vagas.loc[i, NOME_LOTE]
             
-            # --- ATUALIZAÇÃO: Inclui a data e a hora na formatação ---
+            # Formata para incluir dia e hora
             tempo = df_vagas.loc[i, NOME_TEMPO].strftime('%d/%m %H:%M:%S') if pd.notna(df_vagas.loc[i, NOME_TEMPO]) else 'S/ Tempo'
             
-            # HTML estilizado para a vaga ocupada (Lote e Data/Hora adicionados)
+            # HTML estilizado para a vaga ocupada (Body Number, Lote e Data/Hora)
             vaga_html = f"""
             <div class="vaga-card">
                 <div class="vaga-title">{body}</div>
